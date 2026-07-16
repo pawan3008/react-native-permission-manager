@@ -1,0 +1,13 @@
+example/
+__tests__/
+coverage/
+docs/
+.github/
+.vscode/
+*.test.ts
+*.test.tsx
+.eslintrc.js
+.prettierrc.js
+tsconfig.json
+tsconfig.build.json
+jest.config.js

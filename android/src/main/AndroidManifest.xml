@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.permissionmanager">
+
+  <!--
+    Do NOT declare host permissions here.
+
+    Declaring <uses-permission> in a library forces every consumer app to merge
+    them and often causes Manifest Merger conflicts (e.g. maxSdkVersion on
+    WRITE_EXTERNAL_STORAGE). Host apps must declare only the permissions they
+    actually use in their own AndroidManifest.xml — see README.
+  -->
+
+</manifest>

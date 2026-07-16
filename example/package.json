@@ -1,0 +1,26 @@
+{
+  "name": "react-native-permission-manager-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "pods": "cd ios && pod install",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-native": "0.75.0",
+    "react-native-permission-manager": "link:.."
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/runtime": "^7.24.0",
+    "@react-native/babel-preset": "0.75.0",
+    "@react-native/metro-config": "0.75.0",
+    "@types/react": "^18.2.0",
+    "typescript": "^5.4.0"
+  }
+}

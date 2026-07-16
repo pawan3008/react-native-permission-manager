@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "react-native-permission-manager": ["../src/index"]
+    }
+  },
+  "include": ["src", "App.tsx", "index.js"]
+}
