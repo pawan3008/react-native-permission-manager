@@ -174,7 +174,7 @@ function Home({ onNavigate }: { onNavigate: (id: ScreenId) => void }): JSX.Eleme
   return (
     <ScrollView contentContainerStyle={styles.screenPad}>
       <Text style={styles.brand}>Permission Manager</Text>
-      <Text style={styles.caption}>Production-ready TurboModule permissions for React Native.</Text>
+      <Text style={styles.caption}>Try check / request / ensure for each permission.</Text>
       {SCREENS.map(screen => (
         <Pressable
           key={screen.id}

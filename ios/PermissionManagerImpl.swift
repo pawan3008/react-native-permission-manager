@@ -8,8 +8,7 @@ import EventKit
 import CoreBluetooth
 import UIKit
 
-/// Unified permission handler for iOS (Swift). Follows Apple HIG by using
-/// system permission prompts and directing users to Settings when blocked.
+/// iOS permission checks / requests. Bridge calls into this from Obj-C++.
 @objc(PermissionManagerImpl)
 public final class PermissionManagerImpl: NSObject {
 

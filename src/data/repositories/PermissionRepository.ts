@@ -9,7 +9,7 @@ import { Logger } from '../../utils/Logger';
 import { isAndroid } from '../../utils/PlatformUtils';
 
 /**
- * Repository implementation that orchestrates native I/O + mapping.
+ * Maps domain types ↔ native keys/statuses and calls the data source.
  */
 export class PermissionRepository implements IPermissionRepository {
   /** Dedup undeclared-permission console warnings (one per native key). */
@@ -73,11 +73,7 @@ export class PermissionRepository implements IPermissionRepository {
     };
   }
 
-  /**
-   * Emits a clear Metro/console warning when Android returns UNAVAILABLE.
-   * Exact per-permission Logcat lines (e.g. "READ_MEDIA_IMAGES not declared…")
-   * are emitted by the native handler; this mirrors that signal in JS.
-   */
+  /** Warn once when Android says UNAVAILABLE (usually missing manifest entry). */
   private static warnUndeclared(nativeKey: string): void {
     const keys = nativeKey
       .split(',')
@@ -95,7 +91,6 @@ export class PermissionRepository implements IPermissionRepository {
         ? `${shortNames[0]} not declared in AndroidManifest.xml`
         : `${shortNames.join(', ')} — at least one is not declared in AndroidManifest.xml`;
 
-    // Always surface — this is a host-app config mistake, not a runtime soft warn.
     console.warn(`[PermissionManager] ${message}`);
     Logger.warn(message);
   }

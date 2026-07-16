@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://unpkg.com/react-native-permission-manager/docs/banner.png" alt="React Native Permission Manager — One API for all your app permissions" width="100%" />
+  <img src="https://unpkg.com/react-native-permission-manager/docs/banner.png" alt="React Native Permission Manager" width="100%" />
 </p>
 
 # react-native-permission-manager
@@ -8,10 +8,9 @@
 [![CI](https://github.com/pawan3008/react-native-permission-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/pawan3008/react-native-permission-manager/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React Native](https://img.shields.io/badge/React%20Native-0.79%2B-61DAFB?logo=react&logoColor=black)](https://reactnative.dev/)
-[![New Architecture](https://img.shields.io/badge/New%20Architecture-TurboModules-success)](https://reactnative.dev/docs/the-new-architecture/landing-page)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-Production-ready React Native permissions for **Android** and **iOS**, built with **TypeScript**, **TurboModules**, and Clean Architecture.
+Cross-platform permissions for React Native (Android + iOS). One API for check / request / ensure, plus hooks and a small gate component. TurboModule when available, old bridge as fallback.
 
 ## Table of contents
 
@@ -27,19 +26,14 @@ Production-ready React Native permissions for **Android** and **iOS**, built wit
 
 ## Features
 
-- ✅ **One-line API** — `await PermissionManager.request('camera')`, no boilerplate
-- ✅ **Auto rationale dialogs** — Android pre-permission prompts shown automatically (customizable or fully overridable)
-- ✅ **`PermissionGate`** — declarative component that renders children only when granted
-- ✅ **`usePermission()`** — a single hook for status, request, ensure, and settings
-- ✅ **Auto refresh after Settings** — statuses re-check automatically on app foreground / return from Settings
-- ✅ **Permission groups** — built-in groups (`media`, `location`, `communication`, …) or ad-hoc lists via `usePermissionGroup` / `PermissionManager.requestGroup`
-- ✅ **Strong TypeScript support** — fully typed enums, literal permission names, and discriminated result types
-- Unified API across Android & iOS
-- TurboModule / New Architecture ready (legacy bridge fallback)
-- `PermissionManager` singleton: `check`, `request`, `requestMultiple`, `checkGroup`, `requestGroup`, `ensure`, `openSettings`, listeners
-- React hooks + `<PermissionProvider>` + `<PermissionGate>`
-- Android rationale dialogs + auto Settings redirect when permanently denied
-- Camera, Microphone, Photos, Notifications, Location, Contacts, Calendar, Bluetooth, Storage, SMS, Call Phone
+- `PermissionManager.request('camera')` and friends — same call on both platforms
+- Android rationale dialog before the system prompt (optional / customizable)
+- `usePermission()` for status + request / ensure / settings
+- `<PermissionGate>` — render kids only when granted
+- Refreshes when the app comes back from Settings
+- Groups: `requestGroup('media')` or pass your own list
+- Typed permission names and results
+- Camera, mic, photos, notifications, location, contacts, calendar, bluetooth, storage, SMS, call phone
 
 ## Requirements
 
@@ -407,19 +401,19 @@ Requests if needed; if permanently denied (`BLOCKED`), shows a dialog, opens Set
 Yes — `renderRationale` / `renderSettingsPrompt`, or default `Alert` dialogs.
 
 **Will passing `title`/`message` to `request()` always pop a dialog?**  
-No. `title`/`message` only customize the dialog's *content* if/when it's shown. The dialog itself is triggered solely by Android's `shouldShowRequestPermissionRationale` (i.e. only after the user has previously denied the permission). On a first-ever request, no dialog appears even if you pass `title`/`message` — the system permission prompt goes straight through. Set `showRationale: false` to disable the rationale flow entirely.
+No. Those strings only change the text *if* Android wants a rationale (after a prior deny). First request usually goes straight to the system prompt. Use `showRationale: false` to turn the flow off.
 
 **Do I need every permission in the manifest / Info.plist?**  
-No — declare only what your app uses. On Android, if you request a permission that isn't in your `AndroidManifest.xml`, the library returns `UNAVAILABLE` (not a silent `BLOCKED`) and logs a clear warning such as `READ_MEDIA_IMAGES not declared in AndroidManifest.xml` (Logcat + Metro). On iOS, a missing usage string (e.g. `NSContactsUsageDescription`) would normally **crash** the app with `abort_with_payload` — the library detects that, returns `UNAVAILABLE`, and warns instead; still add the Info.plist key for a real system prompt.
+Only what you use. Missing Android `<uses-permission>` → `UNAVAILABLE` + a warning like `READ_MEDIA_IMAGES not declared in AndroidManifest.xml`. Missing iOS usage string used to crash (`abort_with_payload`); we catch that and return `UNAVAILABLE` instead — still add the key if you want a real prompt.
 
 **Why does Contacts return `BLOCKED` right after the first Deny on iOS?**  
-Because iOS will not show the Contacts prompt again from your app. `BLOCKED` means “only Settings can change this” (`canAskAgain: false`). On Android the same first deny is usually `DENIED` and you can ask again.
+iOS won't show that dialog again from the app. `BLOCKED` here means "go to Settings". Android usually gives `DENIED` first so you can ask again.
 
 **What if the native module isn’t linked / I forgot to rebuild?**  
-Calls resolve to `UNAVAILABLE` and a one-time console warning — the JS app does **not** hard-crash. Fix: rebuild native (`pod install` on iOS, clean Android build).
+You get `UNAVAILABLE` and one console warning (no JS crash). Rebuild the native app (`pod install` on iOS).
 
-**What happens if `request()`/`ensure()` is called twice at once (double-tap, race, etc.)?**  
-Calls are automatically coalesced under the hood: if a native prompt for the same permission (or the same batch, for `requestMultiple`/`requestGroup`) is already in flight, subsequent calls just await that same in-flight promise instead of triggering another native `requestPermissions()` call. This avoids the dialog glitches/crashes that can happen on Android when the permission dialog is requested concurrently. No API changes required — it's transparent.
+**What happens if `request()` is called twice at once?**  
+Same permission (or same batch) shares one in-flight native call, so you don't get stacked system dialogs.
 
 ## Architecture
 

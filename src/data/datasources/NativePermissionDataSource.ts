@@ -4,18 +4,12 @@ import type { Spec } from '../../native/NativePermissionManager';
 import { Logger } from '../../utils/Logger';
 
 /**
- * Concrete data source that talks to the native TurboModule / bridge.
+ * Talks to the native module. Dedupes in-flight request() calls so a
+ * double-tap doesn't fire two system dialogs at once.
  */
 export class NativePermissionDataSource implements IPermissionDataSource {
   private readonly module: Spec;
 
-  // Coalesces concurrent `request`/`requestMultiple` calls for the same
-  // native key(s) into a single in-flight native call. Without this, a
-  // double-tap or overlapping `request()`/`ensure()` calls for the same
-  // permission would invoke the native `requestPermissions()` API more than
-  // once concurrently, which can glitch or crash the OS permission dialog
-  // (most notably on Android). `check`/`shouldShowRationale` never prompt the
-  // user, so they don't need coalescing.
   private readonly inFlightRequests = new Map<string, Promise<string>>();
   private readonly inFlightBatches = new Map<string, Promise<Record<string, string>>>();
 

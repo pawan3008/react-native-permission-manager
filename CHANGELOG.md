@@ -13,7 +13,7 @@
 
 ### Added
 
-- Production TypeScript API with Clean Architecture (`domain` → `data` → `presentation`)
+- TypeScript API (`domain` / `data` / `presentation` folders)
 - `PermissionManager` singleton: `check`, `request`, `requestMultiple`, `ensure`, `openSettings`, listeners
 - Friendly `PermissionName` aliases (`camera`, `microphone`, `photos`, …)
 - React hooks: `usePermission`, `usePermissionStatus`, `useMultiplePermissions`

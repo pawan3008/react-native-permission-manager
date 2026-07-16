@@ -6,12 +6,8 @@ const MODULE_NAME = 'RNPermissionManagerSpec';
 let hasWarnedMissingModule = false;
 
 /**
- * Resolves the native permission module via TurboModules first, then
- * falls back to the classic `NativeModules` bridge.
- *
- * If neither is linked (forgot rebuild / pod install / autolinking miss),
- * returns a stub that resolves every call to `unavailable` and warns once —
- * never hard-throws, so a link miss cannot crash the JS app.
+ * TurboModule first, then NativeModules. If nothing is linked (forgot
+ * rebuild), return a stub that answers `unavailable` instead of throwing.
  */
 export function getPermissionManagerModule(): Spec {
   const turbo = TurboModuleRegistry.get<Spec>(MODULE_NAME);

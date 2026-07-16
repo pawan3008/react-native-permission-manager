@@ -9,7 +9,7 @@ import com.facebook.react.bridge.ReadableArray
 import com.permissionmanager.domain.PermissionHandler
 
 /**
- * Bridge / TurboModule entry point. Delegates all logic to [PermissionHandler].
+ * RN module entry. Forwards to [PermissionHandler].
  */
 class PermissionManagerModule(
   private val reactContext: ReactApplicationContext,

@@ -18,7 +18,7 @@ import { Logger } from '../utils/Logger';
 import { isAndroid } from '../utils/PlatformUtils';
 
 /**
- * Public-facing Facade over the use-case layer (Facade + Singleton).
+ * Main entry point apps call. Thin wrapper over the use cases.
  *
  * `import { PermissionManager } from 'react-native-permission-manager'`
  */
@@ -42,10 +42,7 @@ export class PermissionManager {
 
     const rationaleEnabled = options?.showRationale !== false && isAndroid();
     if (rationaleEnabled) {
-      // Only show the rationale dialog when Android actually recommends it
-      // (i.e. after a prior denial). Passing `title`/`message` customizes the
-      // dialog's *content* — it must never be what *triggers* it, otherwise
-      // every request() call would pop the dialog unconditionally.
+      // title/message only fill in the dialog — Android decides whether to show it
       const shouldShow = await deps.shouldShowRationaleUseCase.execute(type);
       if (shouldShow) {
         const confirmed = await presentPermissionDialog({

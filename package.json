@@ -1,7 +1,7 @@
 {
   "name": "react-native-permission-manager",
   "version": "0.2.4",
-  "description": "A production-ready, Clean-Architecture React Native library for managing Android & iOS runtime permissions, built with TurboModules and New Architecture support.",
+  "description": "React Native permissions helper for Android and iOS — check, request, ensure, hooks, and a PermissionGate.",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/index.d.ts",
@@ -58,8 +58,7 @@
     "turbomodule",
     "new-architecture",
     "fabric",
-    "codegen",
-    "clean-architecture"
+    "codegen"
   ],
   "repository": {
     "type": "git",

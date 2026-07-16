@@ -12,7 +12,7 @@ import com.permissionmanager.utils.PermissionUtils
 import java.util.Collections
 
 /**
- * Native-side business logic for Android runtime permissions (API 26–36).
+ * Android permission check / request helpers.
  */
 class PermissionHandler(private val reactContext: ReactApplicationContext) {
 

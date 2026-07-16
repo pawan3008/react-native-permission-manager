@@ -12,7 +12,7 @@ import {
 } from '../domain/usecases';
 
 /**
- * Composition root (DI container).
+ * Holds the wired-up use cases / repository. Tests can swap bits via `override()`.
  */
 export interface PermissionManagerDependencies {
   dataSource: IPermissionDataSource;

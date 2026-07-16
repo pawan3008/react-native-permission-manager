@@ -1,28 +1,17 @@
 # Contributing
 
-Thanks for your interest in contributing to `react-native-permission-manager`!
-
-## Getting started
+PRs welcome.
 
 ```bash
 yarn install
 yarn example
 ```
 
-## Architecture rules
+Keep `src/domain` free of RN imports. Prefer going through `src/di` instead of reaching into `data` from presentation. See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) if you're unsure where something belongs.
 
-Please read [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) before contributing. In short:
+Commits: conventional style is fine (`feat:`, `fix:`, `docs:`, …).
 
-- `src/domain` must never import from `src/data`, `src/presentation`, or `react-native`.
-- `src/data` may depend on `src/domain`, but not on `src/presentation`.
-- `src/presentation` may depend on `src/domain` and `src/data` only through the DI container (`src/di`).
-- Native bridge access must be isolated behind `src/native` and consumed only via `src/data/datasources`.
-
-## Commit style
-
-Use [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`, `chore:`, `test:`, `refactor:`).
-
-## Before opening a PR
+Before opening a PR:
 
 ```bash
 yarn lint

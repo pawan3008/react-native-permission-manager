@@ -2,8 +2,6 @@
 
 ## PermissionManager
 
-Singleton facade over the Clean Architecture use-case layer.
-
 ```ts
 import { PermissionManager } from 'react-native-permission-manager';
 

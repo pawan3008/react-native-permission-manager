@@ -1,10 +1,5 @@
 /**
- * Data-layer abstraction over the raw native bridge, decoupled from any
- * particular native transport (TurboModule vs legacy NativeModules).
- *
- * Operates on raw native string keys/results (not domain enums) — mapping
- * to/from domain types happens in `src/data/mappers` and is orchestrated
- * by `src/data/repositories/PermissionRepository`.
+ * Thin wrapper around the native module. Speaks native permission keys / status strings.
  */
 export interface IPermissionDataSource {
   check(nativePermissionKey: string): Promise<string>;

@@ -5,9 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 
-/**
- * Shared helpers for mapping / inspecting Android runtime permissions.
- */
+/** Small Android permission helpers. */
 object PermissionUtils {
 
   const val STATUS_GRANTED = "granted"
